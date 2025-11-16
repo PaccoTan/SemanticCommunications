@@ -1,4 +1,4 @@
-from VectorQuantization import VectorQuantizer
+from model.VectorQuantization import VectorQuantizer
 from copy import deepcopy
 import torch
 
