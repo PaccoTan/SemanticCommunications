@@ -16,6 +16,9 @@ class VectorQuantizer(nn.Module):
             ind = dist.min(dim=-1).indices
         return ind
 
+    def ind_to_embeddings(self, ind: torch.Tensor) -> torch.Tensor:
+        return self.embeddings[ind]
+
     def get_embeddings(self, x: torch.Tensor) -> torch.Tensor:
         ind = self.quantize(x)
         return self.embeddings[ind]
