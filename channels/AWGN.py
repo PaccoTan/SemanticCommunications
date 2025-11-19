@@ -19,10 +19,10 @@ class AWGN(nn.Module):
     def forward(self, x):
         if torch.is_complex(x):
             noise_I, noise_Q = torch.normal(0, std=self.std_I, size=x.size()), torch.normal(0,std=self.std_Q, size=x.size())
-            noise = torch.stack([noise_I, noise_Q], dim=-1)
-            x = x + torch.view_as_complex(noise)
+            noise = torch.complex(noise_I, noise_Q)
+            x = x + noise
         else:
-            noise_I, noise_Q = torch.normal(0, std=self.std_I, size=x.size()[:-1]),torch.normal(0, std=self.std_Q[:-1], size=x.size())
+            noise_I, noise_Q = torch.normal(0, std=self.std_I, size=x.size()[:-1]),torch.normal(0, std=self.std_Q, size=x.size()[:-1])
             noise = torch.stack([noise_I, noise_Q], dim=-1)
             x = x + noise
         return x
