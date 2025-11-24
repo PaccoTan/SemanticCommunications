@@ -11,6 +11,6 @@ class ResBlock(nn.Module):
         self.bn2 = nn.BatchNorm2d(in_channels)
 
     def forward(self, x):
-        out = self.bn1(self.conv1(x))
-        out = self.bn2(self.conv2(out.relu()))
+        out = self.bn1(self.conv1(x)).relu()
+        out = self.bn2(self.conv2(out))
         return x + out
