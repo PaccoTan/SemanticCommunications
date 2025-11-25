@@ -25,4 +25,5 @@ class VectorQuantizer(nn.Module):
 
     def forward(self, x):
         emb = self.get_embeddings(x)
+        # return z_q with straight through, and embedding for dictionary updates
         return x + (emb - x).detach(), emb
