@@ -15,5 +15,5 @@ class ResidualDecoder(nn.Module):
         for res_block,deconv_layer in zip(self.res_blocks, self.deconv_layers):
             x = res_block(x).relu()
             x = deconv_layer(x)
-        x = self.conv_f(x)
+        x = self.conv_f(x).sigmoid()
         return x
