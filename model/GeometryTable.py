@@ -6,7 +6,7 @@ class GeometryTable(nn.Module):
         # geometry is a tensor of shape N,2 representing signal I and Q mappings for a corresponding Symbol
         # if the tensor is complex then shape is N,1
         super(GeometryTable, self).__init__()
-        self.geometry = geometry
+        self.geometry = nn.Parameter(geometry)
         self.rev_geometry = {k: i for i,k in enumerate(geometry)}
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
