@@ -27,7 +27,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 params_list = []
 K_set = [4, 16, 64]
 SNR_set = [0, 5, 10]
-modulation_set = ["QAM", "PSK"]
+modulation_set = ["QAM"]
 emb_dims = [64,128,256]
 
 for i in range(len(K_set)):
@@ -50,7 +50,7 @@ for param in params_list:
     num_channels = 64
     depth = 2
     emb_dim = param["emb_dim"]
-
+    print(f"{K}-{modulation} @ {SNR}dB with {emb_dim} features")
     # Define Modulation and Channel Scheme
     match modulation:
         case "PSK":
@@ -132,8 +132,9 @@ for param in params_list:
                 break
             else:
                 count += 1
-        print(f"   {epoch+1:3d} |  {total_loss["recon_loss"]/len(train_loader):.4f} "
-              f"|  {total_loss["embedding_loss"]/len(train_loader):.4f}  "
+        print(f"   {epoch+1:3d} |  {total_loss['recon_loss']/len(train_loader):.4f} "
+              f"|  {total_loss['embedding_loss']/len(train_loader):.4f}  "
               f"|  {total_loss['val_loss']/len(val_loader):.4f}  "
               f"| {total_loss['ssim_loss']/len(val_loader):.4f}")
     torch.save(model.state_dict(), f'saved_models/model_{K}{modulation}_{SNR}_{emb_dim}.pth')
+    print("\n\n")
